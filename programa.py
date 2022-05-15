@@ -10,3 +10,4 @@ print("Mostrar Las cartas que contienen mage en el nombre y tienen un ataque igu
 carta=peticion('fname=mage&atk=lte100')
 imprimir(carta)
 print("######################################")
+print("Mostrar las cartas que valen entre 100 y 120")
