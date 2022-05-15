@@ -11,5 +11,5 @@ def imprimir(carta):
         print ("descripción: ",elem.get("desc"))
         print ("atk: ",elem.get("atk"))
         print ("def: ",elem.get("def"))
-        print ("precio: ",elem.get("card_prices").get("cardmarket_price"),"€")
+        print ("precio: ",elem.get("card_prices")[0].get("tcgplayer_price"),"$")
 
