@@ -20,3 +20,4 @@ La aplicación utilizará la api de cartas de YuGiOh para mostrar información d
 [https://db.ygoprodeck.com/api-guide/](https://db.ygoprodeck.com/api-guide/)
 * Documentación de la API del bot de Telegram
 [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
+## Segunda parte
