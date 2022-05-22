@@ -17,9 +17,12 @@ def start(update, context):
 
 
 # obtain the information of the word provided and format before presenting.
+
 def get_word_info(update, context):
     # get the word info
-    carta = get_info(update.message.text)
+    opciones = update.message.text.split()
+    carta = get_info(opciones.pop(0))
+    
 
     # If the user provides an invalid English word, return the custom response from get_info() and exit the function
     if carta.__class__ is str:
