@@ -33,18 +33,22 @@ def get_word_info(update, context):
     # get the word the user provided
     nombre = carta["name"]
     # get the origin of the word
-    descripcion = carta['desc']
-    imagen = carta['card_images'][0]['image_url']
+
+    if len (opciones) == 0:
+        opciones=["descripcion","imagen"]
     
-    message = f"Carta: {nombre}\nDescripción: {descripcion}\n{imagen}"
-    if len (opciones) > 0:
-        message = f"Carta: {nombre}"
-        for opcion in opciones:
-            print (opcion)
-            if opcion == "precio":
-                precio = carta["card_prices"][0]['tcgplayer_price']
-                message += "\nPrecio: $"+ str(precio)
-        message += "\n" + imagen
+    message = f"Carta: {nombre}"
+    for opcion in opciones:
+        if opcion == "precio":
+            precio = carta["card_prices"][0]['tcgplayer_price']
+            message += "\nPrecio: $"+ str(precio)
+        elif opcion == "descripcion":
+            descripcion = carta['desc']
+            message += "\nDescripción: "+ descripcion
+        elif opcion == "imagen":
+            imagen = carta['card_images'][0]['image_url']
+            message += "\n" + imagen
+
 
 
     update.message.reply_text(message)
