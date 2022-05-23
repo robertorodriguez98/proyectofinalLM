@@ -5,7 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/<palabra>')
+
 def get_info(palabra):
 
     url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?name='+palabra
@@ -25,6 +25,11 @@ def get_info(palabra):
 
 
 get_info("Tornado%20Dragon")
+
+@app.route('/')
+def home():
+    return 'todo ok'
+
 
 
 port = int(os.environ.get('PORT', 5000))
