@@ -4,6 +4,7 @@ from telegram.ext import CommandHandler
 from yugiAPI import get_info
 import os
 
+PORT = int(os.environ.get('PORT', 5000))
 telegram_bot_token = os.environ["TOKEN_TEL"]
 
 updater = Updater(token=telegram_bot_token, use_context=True)
@@ -69,7 +70,6 @@ dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(MessageHandler(Filters.text, get_word_info))
 #updater.start_polling()
 updater.start_webhook(listen="0.0.0.0",
-                      port=int(os.environ.get('PORT', 5000)),
-                      url_path=telegram_bot_token,
-                      webhook_url= 'https://yugioh-telegram.herokuapp.com/' + telegram_bot_token
-                      )
+                          port=int(PORT),
+                          url_path=telegram_bot_token)
+updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + telegram_bot_token)
