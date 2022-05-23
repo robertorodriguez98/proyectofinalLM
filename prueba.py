@@ -1,15 +1,15 @@
 
 from telegram import Update,ReplyKeyboardMarkup,ReplyKeyboardRemove,Bot,InlineKeyboardButton,InlineKeyboardMarkup,KeyboardButton,CallbackQuery,ParseMode
 from telegram.ext import CommandHandler,Updater,Dispatcher,MessageHandler,Filters,CallbackContext,CallbackQueryHandler
-import logging
+from yugiAPI import get_info
 import os
 tkn = os.environ["TOKEN_TEL"]
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
+#logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#                    level=logging.INFO)
+#
+#logger = logging.getLogger(__name__)
 
 updater = Updater(tkn,use_context=True)
 bot = Bot(tkn)
@@ -58,9 +58,21 @@ Si introduces el nombre de una carta en inglés, te daré información acerca de
     /descripcion: te dará la descripción de la carta
     /imagen: te dará la imagen de la carta""")
 
+def conseguir_carta(update:Update, context:CallbackContext):
+    opciones = update.message.text.split(" /")
+    parametros = opciones[0]
+    carta = get_info(opciones.pop(0))
+
+    nombre = carta["name"]
+    message = f"Carta: {nombre}"
+    update.message.reply_text(message)
+
+
 def main():
 
     dispatcher.add_handler(MessageHandler(Filters.text,start))
+    dispatcher.add_handler(MessageHandler(Filters.text, conseguir_carta))
+
     updater.start_polling()
 
 
