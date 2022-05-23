@@ -1,7 +1,7 @@
 
 from telegram import Update,ReplyKeyboardMarkup,ReplyKeyboardRemove,Bot,InlineKeyboardButton,InlineKeyboardMarkup,KeyboardButton,CallbackQuery,ParseMode
 from telegram.ext import CommandHandler,Updater,Dispatcher,MessageHandler,Filters,CallbackContext,CallbackQueryHandler
-from yugiAPI import get_info
+#from yugiAPI import get_info
 import logging
 import os
 tkn = os.environ["TOKEN_TEL"]
