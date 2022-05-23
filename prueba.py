@@ -51,7 +51,7 @@ dispatcher : Dispatcher = updater.dispatcher
 #        )
 #
 def start(update:Update, context:CallbackContext):
-    chat_id = update.effective_chat.id
+    chtiD = update.effective_chat.id
     opciones = update.effective_message.text.split(" /")
     parametros = opciones[0]
     carta = get_info(opciones.pop(0))
@@ -60,7 +60,11 @@ def start(update:Update, context:CallbackContext):
     message = f"Carta: {nombre}"
     #update.message.reply_text(message)
 
-    bot.send_message(chat_id=chat_id, text=message)
+    #bot.send_message(chat_id=chat_id, text=message)
+    bot.send_message(
+            chat_id=chtiD,
+            text=message,
+            reply_to_message_id=update.effective_message.message_id)
 
     
 
