@@ -52,26 +52,23 @@ dispatcher : Dispatcher = updater.dispatcher
 #
 def start(update:Update, context:CallbackContext):
     chat_id = update.effective_chat.id
-    context.bot.send_message(chat_id=chat_id, text="""Hola soy un bot que da información acerca de cartas de yugioh!
-Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
-    /precio: te dará el precio de la carta
-    /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta""")
-
-def conseguir_carta(update:Update, context:CallbackContext):
     opciones = update.message.text.split(" /")
     parametros = opciones[0]
     carta = get_info(opciones.pop(0))
 
     nombre = carta["name"]
     message = f"Carta: {nombre}"
-    update.message.reply_text(message)
+    #update.message.reply_text(message)
+
+    context.bot.send_message(chat_id=chat_id, text=message)
+
+    
 
 
 def main():
 
-    #dispatcher.add_handler(MessageHandler(Filters.text,start))
-    dispatcher.add_handler(MessageHandler(Filters.text, conseguir_carta))
+    dispatcher.add_handler(MessageHandler(Filters.text,start))
+    #dispatcher.add_handler(MessageHandler(Filters.text, conseguir_carta))
 
     updater.start_polling()
 
