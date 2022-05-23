@@ -106,6 +106,9 @@ def start(update:Update, context:CallbackContext):
                 message += "\nDescripción: "+ carta['desc']
             elif opcion == "imagen":
                 message += "\n" + carta['card_images'][0]['image_url']
+            elif opcion == "arte":
+                pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + carta["id"] + ".jpg"
+                message += "\n" + pagina
             elif opcion == "sets":
                 message += "\nLa carta se encuentra en los siguientes sets: "
                 for carta_set in carta['card_sets']:
