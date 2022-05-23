@@ -10,7 +10,8 @@ texto_start = """Hola soy un bot que da información acerca de cartas de yugioh!
 Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
     /precio: te dará el precio de la carta
     /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta"""
+    /imagen: te dará la imagen de la carta
+    /arte: te dará la imagen del arte de la carta"""
 ## FUNCIONES
 def get_info(palabra):
 
@@ -40,56 +41,19 @@ updater = Updater(tkn,use_context=True)
 bot = Bot(tkn)
 dispatcher : Dispatcher = updater.dispatcher
 
-# def start(update:Update, context:CallbackContext):
-#    firstname = update.effective_message.from_user.first_name
-#    chtiD = update.effective_message.chat_id
-#    username = update.effective_message.from_user.username
-#    txt = update.effective_message.text
-#    keyboard = [
-#        [KeyboardButton('Help')],
-#        [KeyboardButton('Contact us')]
-#    ]
-#    key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
-
-
-#    if txt=="Help":
-#        bot.send_message(
-#            chat_id=chtiD,
-#            text="How to Deploy Your Telegram bot on Heroku\n\nچگونه ربات خود را در Heroku راه اندازی کنید",
-#            reply_to_message_id=update.effective_message.message_id,
-#        )
-#    elif txt=="Contact us":
-#        bot.send_message(
-#            chat_id=chtiD,
-#            text="<u>Website : </u>Rexxar.ir\n\n<i>Telegram : </i>@Rexxar_ir",
-#            reply_to_message_id=update.effective_message.message_id,
-#            parse_mode=ParseMode.HTML
-#        )
-#    else:
-#        bot.send_message(
-#            chat_id=chtiD,
-#            text=f"Nombre: {firstname}" + f"\n\ Apellido: {username}" + f"\n\ ID: {str(chtiD)}",
-#            reply_to_message_id=update.effective_message.message_id,
-#            reply_markup=key
-
-
-#        )
-
 def start(update:Update, context:CallbackContext):
     chat_id = update.effective_chat.id
     txt = update.effective_message.text
     if txt=="/start":
         context.bot.send_message(chat_id=chat_id, text=texto_start)
     else:
-        #carta=get_info(str(txt))
-        #nombre = carta["name"]
         opciones = txt.split(" /")
         parametros = opciones[0]
         carta = get_info(opciones.pop(0))
 
-        # if type(carta) == str:
-        #     update.message.reply_text(carta)
-        #     return
+        if type(carta) == str:
+            update.message.reply_text(carta)
+            return
         nombre = carta["name"]
 
         if len (opciones) == 0:
@@ -107,7 +71,7 @@ def start(update:Update, context:CallbackContext):
             elif opcion == "imagen":
                 message += "\n" + carta['card_images'][0]['image_url']
             elif opcion == "arte":
-                pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + carta["id"] + ".jpg"
+                pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + str(carta["id"]) + ".jpg"
                 message += "\n" + pagina
             elif opcion == "sets":
                 message += "\nLa carta se encuentra en los siguientes sets: "
