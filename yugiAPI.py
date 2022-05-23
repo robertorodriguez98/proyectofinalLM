@@ -13,14 +13,15 @@ def get_info(palabra):
     response = requests.get(url)
 
 # return a custom response if an invalid word is provided
-    if response.status_code == 404:
+    data = response.json()
+
+    if type(data.get("error")) == str:
         error_response = 'La busqueda introducida no coincide con ningun elemento de la base de datos'
         return error_response
 
-    data = response.json()
 
-    print(data["data"][0])
-    return data["data"][0]
+    else:
+        return data["data"][0]
 
 
 get_info("Tornado%20Dragon")
