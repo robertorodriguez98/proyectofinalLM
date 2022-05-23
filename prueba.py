@@ -81,9 +81,36 @@ def start(update:Update, context:CallbackContext):
     if txt=="/start":
         context.bot.send_message(chat_id=chat_id, text=texto_start)
     else:
-        carta=get_info(str(txt))
+        #carta=get_info(str(txt))
+        #nombre = carta["name"]
+        opciones = txt.split(" /")
+        parametros = opciones[0]
+        carta = get_info(opciones.pop(0))
+
+        # if type(carta) == str:
+        #     update.message.reply_text(carta)
+        #     return
         nombre = carta["name"]
-        context.bot.send_message(chat_id=chat_id, text="adios "+nombre)
+
+        if len (opciones) == 0:
+            opciones=["descripcion","imagen"]
+        
+        message = f"Carta: {nombre}"
+        for opcion in opciones:
+            if opcion == "precios":
+                message += "\nLa carta tiene los siguientes precios:"
+                for pagina, precio in carta["card_prices"][0].items():
+                    nombrepag=pagina.split("_")
+                    message += "\n  "+nombrepag[0]+": $"+ str(precio)
+            elif opcion == "descripcion":
+                message += "\nDescripción: "+ carta['desc']
+            elif opcion == "imagen":
+                message += "\n" + carta['card_images'][0]['image_url']
+            elif opcion == "sets":
+                message += "\nLa carta se encuentra en los siguientes sets: "
+                for carta_set in carta['card_sets']:
+                    message += "\n  " + carta_set['set_name']
+        context.bot.send_message(chat_id=chat_id, text=message)
 
 
 
