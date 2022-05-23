@@ -2,14 +2,15 @@
 from telegram import Update,ReplyKeyboardMarkup,ReplyKeyboardRemove,Bot,InlineKeyboardButton,InlineKeyboardMarkup,KeyboardButton,CallbackQuery,ParseMode
 from telegram.ext import CommandHandler,Updater,Dispatcher,MessageHandler,Filters,CallbackContext,CallbackQueryHandler
 from yugiAPI import get_info
+import logging
 import os
 tkn = os.environ["TOKEN_TEL"]
 
 # Enable logging
-#logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#                    level=logging.INFO)
-#
-#logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 updater = Updater(tkn,use_context=True)
 bot = Bot(tkn)
@@ -71,7 +72,7 @@ def start(update:Update, context:CallbackContext):
 Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
     /precio: te dará el precio de la carta
     /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta""")
+    /imagen: te dará la imagen de la carta""")  
 
 
 def main():
