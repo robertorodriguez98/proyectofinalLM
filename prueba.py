@@ -81,7 +81,9 @@ def start(update:Update, context:CallbackContext):
     if txt=="/start":
         context.bot.send_message(chat_id=chat_id, text=texto_start)
     else:
-        context.bot.send_message(chat_id=chat_id, text="adios "+txt)
+        carta=get_info(str(txt))
+        nombre = carta["name"]
+        context.bot.send_message(chat_id=chat_id, text="adios "+nombre)
 
 
 
