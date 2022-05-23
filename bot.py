@@ -20,7 +20,8 @@ def start(update, context):
 
 def get_word_info(update, context):
     # get the word info
-    opciones = update.message.text.split()
+    opciones = update.message.text.split(" /")
+    parametros = opciones[0]
     carta = get_info(opciones.pop(0))
     
 
@@ -35,10 +36,16 @@ def get_word_info(update, context):
     # get the origin of the word
     descripcion = carta['desc']
     imagen = carta['card_images'][0]['image_url']
+    
+    message = f"Carta: {nombre}\nDescripción: {descripcion}\n{imagen}"
 
+    for opcion in opciones:
+        print (opcion)
+        if opcion == "precio":
+            precio = carta["card_prices"][0]['tcgplayer_price']
+            message += "\nPrecio: $"+ str(precio)   
 
     # format the data into a string
-    message = f"Carta: {nombre}\nDescripción: {descripcion}\n{imagen}"
 
     update.message.reply_text(message)
 
