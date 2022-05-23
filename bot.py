@@ -69,7 +69,7 @@ def get_word_info(update, context):
     # that is not a command.
     dispatcher.add_handler(MessageHandler(Filters.text, get_word_info))
     #updater.start_polling()
-    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=telegram_bot_token, webhook_url="https://yugioh-telegram.herokuapp.com" + telegram_bot_token)
+    updater.start_polling()
     updater.idle()
 
 
