@@ -70,29 +70,16 @@ dispatcher : Dispatcher = updater.dispatcher
 
 
 #        )
-#
-# def start(update:Update, context:CallbackContext):
-#     chtiD = update.effective_chat.id
-#     opciones = update.effective_message.text.split(" /")
-#     parametros = opciones[0]
-#     carta = get_info(opciones.pop(0))
 
-#     nombre = carta["name"]
-#     message = f"Carta: {nombre}"
-#     #update.message.reply_text(message)
-
-#     #bot.send_message(chat_id=chat_id, text=message)
-#     bot.send_message(
-#             chat_id=chtiD,
-#             text=message,
-#             reply_to_message_id=update.effective_message.message_id)
 def start(update:Update, context:CallbackContext):
+    txt = update.effective_message.text
     chat_id = update.effective_chat.id
-    context.bot.send_message(chat_id=chat_id, text="""Hola soy un bot que da información acerca de cartas de yugioh!
+    if txt=="\start"
+        context.bot.send_message(chat_id=chat_id, text="""Hola soy un bot que da información acerca de cartas de yugioh!
 Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
-    /precio: te dará el precio de la carta
-    /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta""")  
+        /precio: te dará el precio de la carta
+        /descripcion: te dará la descripción de la carta
+        /imagen: te dará la imagen de la carta""")  
 
 
 def main():
