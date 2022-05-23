@@ -31,21 +31,21 @@ def get_word_info(update, context):
         return
 
     # get the word the user provided
-    nombre = update.message.text
-
+    nombre = carta["name"]
     # get the origin of the word
     descripcion = carta['desc']
     imagen = carta['card_images'][0]['image_url']
     
     message = f"Carta: {nombre}\nDescripción: {descripcion}\n{imagen}"
+    if len (opciones) > 0:
+        message = f"Carta: {nombre}"
+        for opcion in opciones:
+            print (opcion)
+            if opcion == "precio":
+                precio = carta["card_prices"][0]['tcgplayer_price']
+                message += "\nPrecio: $"+ str(precio)
+        message += "\n" + imagen
 
-    for opcion in opciones:
-        print (opcion)
-        if opcion == "precio":
-            precio = carta["card_prices"][0]['tcgplayer_price']
-            message += "\nPrecio: $"+ str(precio)   
-
-    # format the data into a string
 
     update.message.reply_text(message)
 
