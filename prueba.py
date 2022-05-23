@@ -74,7 +74,11 @@ dispatcher : Dispatcher = updater.dispatcher
 def start(update:Update, context:CallbackContext):
     chat_id = update.effective_chat.id
     txt = update.effective_message.text
-    context.bot.send_message(chat_id=chat_id, text="hola "+txt)  
+    if txt=="/start":
+        context.bot.send_message(chat_id=chat_id, text="hola "+txt)
+    else:
+        context.bot.send_message(chat_id=chat_id, text="adios "+txt)
+
 
 
 def main():
