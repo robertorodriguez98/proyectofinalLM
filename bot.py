@@ -72,4 +72,6 @@ dispatcher.add_handler(MessageHandler(Filters.text, get_word_info))
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=telegram_bot_token)
-updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + telegram_bot_token)
+updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + telegram_bot_token
+)
+updater.idle()
