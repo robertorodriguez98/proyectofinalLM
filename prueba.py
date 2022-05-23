@@ -70,7 +70,7 @@ def conseguir_carta(update:Update, context:CallbackContext):
 
 def main():
 
-    dispatcher.add_handler(MessageHandler(Filters.text,start))
+    #dispatcher.add_handler(MessageHandler(Filters.text,start))
     dispatcher.add_handler(MessageHandler(Filters.text, conseguir_carta))
 
     updater.start_polling()
