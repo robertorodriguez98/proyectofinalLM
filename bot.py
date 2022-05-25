@@ -99,7 +99,7 @@ def start(update:Update, context:CallbackContext):
         for carta in cartas:
             #carta = carta.json()
             #nombre = carta["name"]
-            message += carta.type()
+            message += carta
             
         context.bot.send_message(chat_id=chtiD, text=message)
 
