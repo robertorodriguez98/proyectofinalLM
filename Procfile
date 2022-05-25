@@ -1,2 +1,2 @@
-worker: python3 prueba.py
+worker: python3 bot.py
  

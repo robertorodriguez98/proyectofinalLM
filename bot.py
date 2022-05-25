@@ -1,84 +1,100 @@
-import telegram
-from telegram.ext import Updater, MessageHandler, Filters
-from telegram.ext import CommandHandler
-from yugiAPI import get_info
+
+from telegram import Update,ReplyKeyboardMarkup,ReplyKeyboardRemove,Bot,InlineKeyboardButton,InlineKeyboardMarkup,KeyboardButton,CallbackQuery,ParseMode
+from telegram.ext import CommandHandler,Updater,Dispatcher,MessageHandler,Filters,CallbackContext,CallbackQueryHandler
+#from yugiAPI import get_info
+import logging
+from funciones_bot import *
 import os
-
-PORT = int(os.environ.get('PORT', 5000))
-telegram_bot_token = os.environ["TOKEN_TEL"]
-
-updater = Updater(token=telegram_bot_token, use_context=True)
-dispatcher = updater.dispatcher
-
-
-# set up the introductory statement for the bot when the /start command is invoked
-def start(update, context):
-    chat_id = update.effective_chat.id
-    context.bot.send_message(chat_id=chat_id, text="""Hola soy un bot que da información acerca de cartas de yugioh!
-Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
-    /precio: te dará el precio de la carta
+tkn = os.environ["TOKEN_TEL"]
+texto_start = """Hola soy un bot que da información acerca de cartas de yugioh!
+"""
+ayuda_cartas = """Si introduces el nombre de una carta en inglés, te daré información acerca de ella.
+La sintaxis para buscar una carta es:
+/carta nombrecarta [opciones]
+dib
+Las opciones que se pueden introducir son:
+    /precios: te dará el precio de la carta
     /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta""")
+    /imagen: te dará la imagen de la carta
+    /arte: te dará la imagen del arte de la carta
+EJEMPLOS:
+/carta Dark Magician
+/carta Kuriboh /precios
+/carta Blue-Eyes White Dragon /arte /sets
+"""
 
 
 
-# obtain the information of the word provided and format before presenting.
+updater = Updater(tkn,use_context=True)
+bot = Bot(tkn)
+dispatcher : Dispatcher = updater.dispatcher
 
-def get_word_info(update, context):
-    # get the word info
-    opciones = update.message.text.split(" /")
-    parametros = opciones[0]
-    carta = get_info(opciones.pop(0))
-    print(carta)
+def start(update:Update, context:CallbackContext):
+    chtiD = update.effective_chat.id
 
-    # If the user provides an invalid English word, return the custom response from get_info() and exit the function
-    if type(carta) == str:
-        update.message.reply_text(carta)
-        return
+    txt = update.effective_message.text
 
-    # get the word the user provided
-    nombre = carta["name"]
-    # get the origin of the word
-
-    if len (opciones) == 0:
-        opciones=["descripcion","imagen"]
-    
-    message = f"Carta: {nombre}"
-    for opcion in opciones:
-        if opcion == "precios":
-            message += "\nLa carta tiene los siguientes precios:"
-            for pagina, precio in carta["card_prices"][0].items():
-                nombrepag=pagina.split("_")
-                message += "\n  "+nombrepag[0]+": $"+ str(precio)
-        elif opcion == "descripcion":
-            message += "\nDescripción: "+ carta['desc']
-        elif opcion == "imagen":
-            message += "\n" + carta['card_images'][0]['image_url']
-        elif opcion == "sets":
-            message += "\nLa carta se encuentra en los siguientes sets: "
-            for carta_set in carta['card_sets']:
-                message += "\n  " + carta_set['set_name']
+    keyboard = [
+        [KeyboardButton('/ayuda_general')],
+        [KeyboardButton('/ayuda_cartas')],
+        [KeyboardButton('/ayuda_arquetipo')],
+        [KeyboardButton('/ayuda_sets')]
+    ]
+    key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
 
 
-    update.message.reply_text(message)
+    if txt=="/start":
+        #context.bot.send_message(chat_id=chat_id, text=texto_start)
+        bot.send_message(
+            chat_id=chtiD,
+            text=texto_start,
+            reply_to_message_id=update.effective_message.message_id,
+            reply_markup=key
+        )
 
-# run the start function when the user invokes the /start command 
+    elif txt=="/ayuda_cartas":
+        context.bot.send_message(chat_id=chtiD, text=ayuda_cartas)
 
-# invoke the get_word_info function when the user sends a message 
-# that is not a command.
-#updater.start_polling()
+    elif txt.startswith("/carta"):
+        opciones = txt.replace("/carta ","").split(" /")
+        parametros = opciones[0]
+        carta = get_info(opciones.pop(0))
 
-#updater.start_webhook(listen="0.0.0.0",
-#                      port=int(os.environ.get('PORT', 5000)),
-#                      url_path=telegram_bot_token,
-#                      webhook_url='https://yugioh-telegram.herokuapp.com/' + telegram_bot_token
-#                      )
+        if type(carta) == str:
+            update.message.reply_text(carta)
+            return
+        nombre = carta["name"]
 
-                      
+        if len (opciones) == 0:
+            opciones=["descripcion","imagen"]
+        
+        message = f"Carta: {nombre}"
+        for opcion in opciones:
+            if opcion == "precios":
+                message += "\nLa carta tiene los siguientes precios:"
+                for pagina, precio in carta["card_prices"][0].items():
+                    nombrepag=pagina.split("_")
+                    message += "\n  "+nombrepag[0]+": $"+ str(precio)
+            elif opcion == "descripcion":
+                message += "\nDescripción: "+ carta['desc']
+            elif opcion == "imagen":
+                message += "\n" + carta['card_images'][0]['image_url']
+            elif opcion == "arte":
+                pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + str(carta["id"]) + ".jpg"
+                message += "\n" + pagina
+            elif opcion == "sets":  
+                message += "\nLa carta se encuentra en los siguientes sets: "
+                for carta_set in carta['card_sets']:
+                    message += "\n  " + carta_set['set_name']
+        context.bot.send_message(chat_id=chtiD, text=message)
+
+
+
 def main():
 
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(MessageHandler(Filters.text, get_word_info))
+    dispatcher.add_handler(MessageHandler(Filters.text,start))
+    #dispatcher.add_handler(MessageHandler(Filters.text, conseguir_carta))
+
     updater.start_polling()
 
 
