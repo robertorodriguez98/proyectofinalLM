@@ -47,8 +47,10 @@ def start(update:Update, context:CallbackContext):
     txt = update.effective_message.text
 
     keyboard = [
-       [KeyboardButton('/carta')],
-       [KeyboardButton('/ayuda')]
+        [KeyboardButton('/ayuda_general')],
+        [KeyboardButton('/ayuda_cartas')],
+        [KeyboardButton('/ayuda_arquetipo')],
+        [KeyboardButton('/ayuda_sets')]
     ]
     key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
 
@@ -61,7 +63,8 @@ def start(update:Update, context:CallbackContext):
             reply_to_message_id=update.effective_message.message_id,
             reply_markup=key
         )
-    else:
+    if txt.startswith("/carta"):
+        opciones = txt.replace("/carta ","").split("/")
         opciones = txt.split(" /")
         parametros = opciones[0]
         carta = get_info(opciones.pop(0))
@@ -88,7 +91,7 @@ def start(update:Update, context:CallbackContext):
             elif opcion == "arte":
                 pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + str(carta["id"]) + ".jpg"
                 message += "\n" + pagina
-            elif opcion == "sets":
+            elif opcion == "sets":  
                 message += "\nLa carta se encuentra en los siguientes sets: "
                 for carta_set in carta['card_sets']:
                     message += "\n  " + carta_set['set_name']
