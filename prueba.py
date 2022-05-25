@@ -65,7 +65,6 @@ def start(update:Update, context:CallbackContext):
         )
     if txt.startswith("/carta"):
         opciones = txt.replace("/carta ","").split("/")
-        opciones = txt.split(" /")
         parametros = opciones[0]
         carta = get_info(opciones.pop(0))
 
