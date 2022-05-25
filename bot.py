@@ -58,11 +58,13 @@ def start(update:Update, context:CallbackContext):
     elif txt.startswith("/carta"):
         opciones = txt.replace("/carta ","").split(" /")
         parametros = opciones[0]
-        carta = get_info('name',opciones.pop(0))[0]
+        carta = get_info('name',opciones.pop(0))
 
         if type(carta) == str:
             update.message.reply_text(carta)
             return
+        #si no es un string, es una lista
+        carta = carta[0]
         nombre = carta["name"]
 
         if len (opciones) == 0:
@@ -93,7 +95,7 @@ def start(update:Update, context:CallbackContext):
         #parametros = opciones[0]
         cartas = get_info('archetype',opciones)
         if type(cartas) == str:
-            update.message.reply_text(carta)
+            update.message.reply_text(cartas)
             return
         message= f"Arquetipo: {opciones}"
         for carta in cartas:
