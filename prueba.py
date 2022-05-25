@@ -13,10 +13,14 @@ La sintaxis para buscar una carta es:
 /carta nombrecarta [opciones]
 dib
 Las opciones que se pueden introducir son:
-    /precio: te dará el precio de la carta
+    /precios: te dará el precio de la carta
     /descripcion: te dará la descripción de la carta
     /imagen: te dará la imagen de la carta
     /arte: te dará la imagen del arte de la carta
+EJEMPLOS:
+/carta Dark Magician
+/carta Kuriboh /precios
+/carta Blue-Eyes White Dragon /arte /sets
 """
 ## FUNCIONES
 def get_info(palabra):
