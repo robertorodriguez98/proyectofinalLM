@@ -42,7 +42,8 @@ bot = Bot(tkn)
 dispatcher : Dispatcher = updater.dispatcher
 
 def start(update:Update, context:CallbackContext):
-    chat_id = update.effective_chat.id
+    chtiD = update.effective_chat.id
+
     txt = update.effective_message.text
 
     keyboard = [
@@ -55,6 +56,7 @@ def start(update:Update, context:CallbackContext):
     if txt=="/start":
         #context.bot.send_message(chat_id=chat_id, text=texto_start)
         bot.send_message(
+            chat_id=chtiD,
             text=texto_start,
             reply_to_message_id=update.effective_message.message_id,
             reply_markup=key
@@ -90,7 +92,7 @@ def start(update:Update, context:CallbackContext):
                 message += "\nLa carta se encuentra en los siguientes sets: "
                 for carta_set in carta['card_sets']:
                     message += "\n  " + carta_set['set_name']
-        context.bot.send_message(chat_id=chat_id, text=message)
+        context.bot.send_message(chat_id=chtiD, text=message)
 
 
 
