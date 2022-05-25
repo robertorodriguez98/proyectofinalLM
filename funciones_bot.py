@@ -12,4 +12,4 @@ def get_info(punto_busqueda,palabra):
         return error_response
 
     else:
-        return data["data"][0]
+        return data["data"]
