@@ -7,11 +7,17 @@ import requests
 import os
 tkn = os.environ["TOKEN_TEL"]
 texto_start = """Hola soy un bot que da información acerca de cartas de yugioh!
-Si introduces el nombre de una carta en inglés, te daré información acerca de ella. También, puedes introducir los siguientes parámetros tras el nombre:
+"""
+ayuda_cartas = """Si introduces el nombre de una carta en inglés, te daré información acerca de ella.
+La sintaxis para buscar una carta es:
+/carta nombrecarta [opciones]
+dib
+Las opciones que se pueden introducir son:
     /precio: te dará el precio de la carta
     /descripcion: te dará la descripción de la carta
     /imagen: te dará la imagen de la carta
-    /arte: te dará la imagen del arte de la carta"""
+    /arte: te dará la imagen del arte de la carta
+"""
 ## FUNCIONES
 def get_info(palabra):
 
@@ -63,7 +69,11 @@ def start(update:Update, context:CallbackContext):
             reply_to_message_id=update.effective_message.message_id,
             reply_markup=key
         )
-    if txt.startswith("/carta"):
+
+    elif txt=="/ayuda_cartas":
+        context.bot.send_message(chat_id=chtiD, text=ayuda_cartas)
+
+    elif txt.startswith("/carta"):
         opciones = txt.replace("/carta ","").split(" /")
         parametros = opciones[0]
         carta = get_info(opciones.pop(0))
