@@ -97,6 +97,7 @@ def start(update:Update, context:CallbackContext):
             return
         message= f"Arquetipo: {opciones}"
         for carta in cartas:
+            carta = carta.json()
             nombre = carta["name"]
             message += "\n" + nombre
             
