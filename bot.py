@@ -97,9 +97,9 @@ def start(update:Update, context:CallbackContext):
             return
         message= f"Arquetipo: {opciones}"
         for carta in cartas:
-            carta = carta.json()
-            nombre = carta["name"]
-            message += "\n" + nombre
+            #carta = carta.json()
+            #nombre = carta["name"]
+            message += carta.type()
             
         context.bot.send_message(chat_id=chtiD, text=message)
 
