@@ -41,11 +41,6 @@ def get_info(palabra):
         return data["data"][0]
 
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
 
 updater = Updater(tkn,use_context=True)
 bot = Bot(tkn)
