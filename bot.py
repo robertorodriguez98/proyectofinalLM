@@ -58,7 +58,7 @@ def start(update:Update, context:CallbackContext):
     elif txt.startswith("/carta"):
         opciones = txt.replace("/carta ","").split(" /")
         parametros = opciones[0]
-        carta = get_info(opciones.pop(0))
+        carta = get_info('name',opciones.pop(0))
 
         if type(carta) == str:
             update.message.reply_text(carta)
@@ -87,7 +87,17 @@ def start(update:Update, context:CallbackContext):
                 for carta_set in carta['card_sets']:
                     message += "\n  " + carta_set['set_name']
         context.bot.send_message(chat_id=chtiD, text=message)
-
+    
+    elif txt.startswith("/arquetipo"):
+        opciones = txt.replace("/arquetipo ","")
+        #parametros = opciones[0]
+        cartas = get_info('archetype',opciones)
+        message= f"Arquetipo: {opciones}"
+        for carta in cartas:
+            nombre = carta["name"]
+            message += "\n" + nombre
+            
+        context.bot.send_message(chat_id=chtiD, text=message)
 
 
 def main():
