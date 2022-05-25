@@ -92,6 +92,9 @@ def start(update:Update, context:CallbackContext):
         opciones = txt.replace("/arquetipo ","")
         #parametros = opciones[0]
         cartas = get_info('archetype',opciones)
+        if type(carta) == str:
+            update.message.reply_text(carta)
+            return
         message= f"Arquetipo: {opciones}"
         for carta in cartas:
             nombre = carta["name"]
