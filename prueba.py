@@ -54,6 +54,7 @@ def start(update:Update, context:CallbackContext):
 
     if txt=="/start":
         context.bot.send_message(chat_id=chat_id, text=texto_start)
+        reply_markup=key
     else:
         opciones = txt.split(" /")
         parametros = opciones[0]
