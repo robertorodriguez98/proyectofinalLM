@@ -60,7 +60,7 @@ def start(update:Update, context:CallbackContext):
             reply_markup=key
         )
 
-    elif txt=="/ayuda":
+    elif txt.startswith("/ayuda"):
         opciones = txt.replace("/ayuda ","")
         if opciones == "cartas":
             keyboard = [
