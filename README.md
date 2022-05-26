@@ -21,3 +21,14 @@ La aplicación utilizará la api de cartas de YuGiOh para mostrar información d
 * Documentación de la API del bot de Telegram
 [https://core.telegram.org/bots/api](https://core.telegram.org/bots/api)
 ## Segunda parte
+El bot de Telegram es el siguiente
+[https://t.me/yugioh_cards_bot](https://t.me/yugioh_cards_bot)
+### Funciones:
+* Mostrar una carta indicando su nombre. También se pueden mostrar los siguientes datos con parámetros:
+    * Precios
+    * Descripción
+    * Arte
+    * Sets en los que se puede conseguir
+* Mostrar todas las cartas pertenecientes a un arquetipo. Además, aparece un desplegable que permite acceder a la vista detalle de cualquiera de las cartas mostradas.
+* Mostrar una carta aleatoria, de la que luego, a través de los botones, se pueden mostrar los detalles indicados anteriormente.
+
