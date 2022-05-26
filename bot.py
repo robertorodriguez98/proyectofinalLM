@@ -10,25 +10,30 @@ texto_start = """Hola soy un bot que da información acerca de cartas de yugioh!
 """
 ayuda_cartas = """Si introduces el nombre de una carta en inglés, te daré información acerca de ella.
 La sintaxis para buscar una carta es:
-/carta nombrecarta [opciones]
-dib
+    /carta nombrecarta [opciones]
+
 Las opciones que se pueden introducir son:
-    /precios: te dará el precio de la carta
-    /descripcion: te dará la descripción de la carta
-    /imagen: te dará la imagen de la carta
-    /arte: te dará la imagen del arte de la carta
+        /precios: te dará el precio de la carta
+        /descripcion: te dará la descripción de la carta
+        /imagen: te dará la imagen de la carta
+        /arte: te dará la imagen del arte de la carta
+
 EJEMPLOS:
-/carta Dark Magician
-/carta Kuriboh /precios
-/carta Blue-Eyes White Dragon /arte /sets
+    /carta Dark Magician
+    /carta Kuriboh /precios
+    /carta Blue-Eyes White Dragon /arte /sets
 """
 ayuda_arquetipo = """Con el comando /arquetipo obtendrás todas las cartas pertenecientes
 al arquetipo especificado, pudiendo además seleccionar cualquiera de las cartas para
 acceder a sus detalles.
+
+La sintaxis para buscar una arquetipo es:
+    /arquetipo nombrearquetipo
+
 Algunos arquetipos de ejemplo son:
-/arquetipo abc
-/arquetipo Dark Magician
-/arquetipo Prank-Kids
+    /arquetipo abc
+    /arquetipo Dark Magician
+    /arquetipo Prank-Kids
 """
 modificadores = ["/descripcion","/imagen","/arte","/precios","/sets"]
 
@@ -95,47 +100,47 @@ def start(update:Update, context:CallbackContext):
         opciones = txt.replace("/carta ","").split(" /")
         parametros = opciones[0]
         carta = get_info('name',opciones.pop(0))
+        datos_carta(carta,modificadores,chtiD,bot)
+        # if type(carta) == str:
+        #     update.message.reply_text(carta)
+        #     return
+        # #si no es un string, es una lista
+        # carta = carta[0]
+        # nombre = carta["name"]
 
-        if type(carta) == str:
-            update.message.reply_text(carta)
-            return
-        #si no es un string, es una lista
-        carta = carta[0]
-        nombre = carta["name"]
-
-        if len (opciones) == 0:
-            opciones=["descripcion","imagen"]
+        # if len (opciones) == 0:
+        #     opciones=["descripcion","imagen"]
         
-        message = f"Carta: {nombre}"
-        for opcion in opciones:
-            if opcion == "precios":
-                message += "\nLa carta tiene los siguientes precios:"
-                for pagina, precio in carta["card_prices"][0].items():
-                    nombrepag=pagina.split("_")
-                    message += "\n  "+nombrepag[0]+": $"+ str(precio)
-            elif opcion == "descripcion":
-                message += "\nDescripción: "+ carta['desc']
-            elif opcion == "imagen":
-                message += "\n" + carta['card_images'][0]['image_url']
-            elif opcion == "arte":
-                pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + str(carta["id"]) + ".jpg"
-                message += "\n" + pagina
-            elif opcion == "sets":  
-                message += "\nLa carta se encuentra en los siguientes sets: "
-                for carta_set in carta['card_sets']:
-                    message += "\n  " + carta_set['set_name']
-        #context.bot.send_message(chat_id=chtiD, text=message)
-        # Creamos los botones especificos para la carta que está mostrando
-        keyboard = []
-        for modificador in modificadores:
-            keyboard.append([KeyboardButton('/carta '+nombre+" "+modificador)])
-        key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
-        bot.send_message(
-            chat_id=chtiD,
-            text=message,
-            reply_to_message_id=update.effective_message.message_id,
-            reply_markup=key
-        )
+        # message = f"Carta: {nombre}"
+        # for opcion in opciones:
+        #     if opcion == "precios":
+        #         message += "\nLa carta tiene los siguientes precios:"
+        #         for pagina, precio in carta["card_prices"][0].items():
+        #             nombrepag=pagina.split("_")
+        #             message += "\n  "+nombrepag[0]+": $"+ str(precio)
+        #     elif opcion == "descripcion":
+        #         message += "\nDescripción: "+ carta['desc']
+        #     elif opcion == "imagen":
+        #         message += "\n" + carta['card_images'][0]['image_url']
+        #     elif opcion == "arte":
+        #         pagina = "https://storage.googleapis.com/ygoprodeck.com/pics_artgame/" + str(carta["id"]) + ".jpg"
+        #         message += "\n" + pagina
+        #     elif opcion == "sets":  
+        #         message += "\nLa carta se encuentra en los siguientes sets: "
+        #         for carta_set in carta['card_sets']:
+        #             message += "\n  " + carta_set['set_name']
+        # #context.bot.send_message(chat_id=chtiD, text=message)
+        # # Creamos los botones especificos para la carta que está mostrando
+        # keyboard = []
+        # for modificador in modificadores:
+        #     keyboard.append([KeyboardButton('/carta '+nombre+" "+modificador)])
+        # key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
+        # bot.send_message(
+        #     chat_id=chtiD,
+        #     text=message,
+        #     reply_to_message_id=update.effective_message.message_id,
+        #     reply_markup=key
+        # )
 
 
     elif txt.startswith("/arquetipo"):
