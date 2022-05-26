@@ -7,6 +7,8 @@ from funciones_bot import *
 import os
 tkn = os.environ["TOKEN_TEL"]
 texto_start = """Hola soy un bot que da información acerca de cartas de yugioh!
+Para obtener ayuda sobre como utilizar las diferentes funciones, haz click en los botones, o escribe 
+/ayuda y la función que quieras.
 """
 ayuda_cartas = """Si introduces el nombre de una carta en inglés, te daré información acerca de ella.
 La sintaxis para buscar una carta es:
@@ -17,7 +19,7 @@ Las opciones que se pueden introducir son:
         /descripcion: te dará la descripción de la carta
         /imagen: te dará la imagen de la carta
         /arte: te dará la imagen del arte de la carta
-
+Además, cuando se muestra una carta aparecen botones de las opciones disponibles.
 EJEMPLOS:
     /carta Dark Magician
     /carta Kuriboh /precios
@@ -35,6 +37,7 @@ Algunos arquetipos de ejemplo son:
     /arquetipo Dark Magician
     /arquetipo Prank-Kids
 """
+ayuda_aleatoria = """Con el comando /aleatoria obtendrás una carta aleatoria de la base de datos,mostrando la información del nombre, descripción e imagen."""
 modificadores = ["/descripcion","/imagen","/arte","/precios","/sets"]
 
 
@@ -91,6 +94,17 @@ def start(update:Update, context:CallbackContext):
             bot.send_message(
                 chat_id=chtiD,
                 text=ayuda_arquetipo,
+                reply_to_message_id=update.effective_message.message_id,
+                reply_markup=key
+            )
+        elif opciones == "aleatoria":
+            keyboard = [
+            [KeyboardButton('/aleatoria')]
+            ]
+            key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
+            bot.send_message(
+                chat_id=chtiD,
+                text=ayuda_aleatoria,
                 reply_to_message_id=update.effective_message.message_id,
                 reply_markup=key
             )
