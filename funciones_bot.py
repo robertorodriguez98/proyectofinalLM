@@ -5,6 +5,7 @@ from telegram.ext import CommandHandler,Updater,Dispatcher,MessageHandler,Filter
 def get_info(punto_busqueda,palabra):
     if punto_busqueda == "random":
         url = "https://db.ygoprodeck.com/api/v7/randomcard.php"
+
     else:
         url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?'+punto_busqueda+'='+palabra
     print(url)
@@ -16,5 +17,7 @@ def get_info(punto_busqueda,palabra):
         return error_response
 
     else:
+        if punto_busqueda == "random":
+            return data
         return data["data"]
 
