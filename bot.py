@@ -22,6 +22,14 @@ EJEMPLOS:
 /carta Kuriboh /precios
 /carta Blue-Eyes White Dragon /arte /sets
 """
+ayuda_arquetipo = """Con el comando /arquetipo obtendrás todas las cartas pertenecientes
+al arquetipo especificado, pudiendo además seleccionar cualquiera de las cartas para
+acceder a sus detalles.
+Algunos arquetipos de ejemplo son:
+/arquetipo abc
+/arquetipo Dark Magician
+/arquetipo Prank-Kids
+"""
 modificadores = ["/descripcion","/imagen","/arte","/precios","/sets"]
 
 
@@ -35,10 +43,10 @@ def start(update:Update, context:CallbackContext):
     txt = update.effective_message.text
 
     keyboard = [
-        [KeyboardButton('/ayuda_general')],
-        [KeyboardButton('/ayuda_cartas')],
-        [KeyboardButton('/ayuda_arquetipo')],
-        [KeyboardButton('/ayuda_sets')]
+        [KeyboardButton('/start')],
+        [KeyboardButton('/ayuda cartas')],
+        [KeyboardButton('/ayuda arquetipo')],
+        [KeyboardButton('/ayuda aleatoria')]
     ]
     key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
 
@@ -52,8 +60,36 @@ def start(update:Update, context:CallbackContext):
             reply_markup=key
         )
 
-    elif txt=="/ayuda_cartas":
-        context.bot.send_message(chat_id=chtiD, text=ayuda_cartas)
+    elif txt=="/ayuda":
+        opciones = txt.replace("/ayuda ","")
+        if opciones == "cartas":
+            keyboard = [
+            [KeyboardButton('/carta Dark Magician')],
+            [KeyboardButton('/carta Kuriboh /precios')],
+            [KeyboardButton('/carta Blue-Eyes White Dragon /arte /sets')]
+            ]
+            key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
+            bot.send_message(
+                chat_id=chtiD,
+                text=ayuda_cartas,
+                reply_to_message_id=update.effective_message.message_id,
+                reply_markup=key
+            )
+            #context.bot.send_message(chat_id=chtiD, text=ayuda_cartas)
+        elif opciones == "arquetipo":
+            keyboard = [
+            [KeyboardButton('/arquetipo abc')],
+            [KeyboardButton('/arquetipo Dark Magician')],
+            [KeyboardButton('/arquetipo Prank-Kids')]
+            ]
+            key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
+            bot.send_message(
+                chat_id=chtiD,
+                text=ayuda_arquetipo,
+                reply_to_message_id=update.effective_message.message_id,
+                reply_markup=key
+            )
+            #context.bot.send_message(chat_id=chtiD, text=ayuda_arquetipo)
 
     elif txt.startswith("/carta"):
         opciones = txt.replace("/carta ","").split(" /")
