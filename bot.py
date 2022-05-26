@@ -167,17 +167,13 @@ def start(update:Update, context:CallbackContext):
         )
         #context.bot.send_message(chat_id=chtiD, text=message)
     elif txt.startswith("/aleatoria"):
-        carta = get_info('random',None)
+        carta = get_info('random',"da igual")
 
         if type(carta) == str:
             update.message.reply_text(carta)
             return
-        
+        #si no es un string, es una lista
         nombre = carta["name"]
-
-        if len (opciones) == 0:
-            opciones=["descripcion","imagen"]
-        
         message = f"Carta: {nombre}"+"\nDescripción: "+ carta['desc']+"\n" + carta['card_images'][0]['image_url']
         #context.bot.send_message(chat_id=chtiD, text=message)
         # Creamos los botones especificos para la carta que está mostrando
