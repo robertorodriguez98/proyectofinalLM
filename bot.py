@@ -92,7 +92,7 @@ def start(update:Update, context:CallbackContext):
         # Creamos los botones especificos para la carta que está mostrando
         keyboard = []
         for modificador in modificadores:
-            keyboard = keyboard.append([KeyboardButton('/carta '+nombre+" "+modificador)])
+            keyboard.append([KeyboardButton('/carta '+nombre+" "+modificador)])
         key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
         bot.send_message(
             chat_id=chtiD,
