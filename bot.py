@@ -167,7 +167,7 @@ def start(update:Update, context:CallbackContext):
         )
         #context.bot.send_message(chat_id=chtiD, text=message)
     elif txt.startswith("/aleatoria"):
-        carta = get_info('random')
+        carta = get_info('random',None)
 
         if type(carta) == str:
             update.message.reply_text(carta)
