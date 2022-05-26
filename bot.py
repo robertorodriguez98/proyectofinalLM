@@ -98,12 +98,12 @@ def start(update:Update, context:CallbackContext):
             update.message.reply_text(cartas)
             return
         message= f"Arquetipo: {opciones}"
-        key = []
+        keyboard = []
         for carta in cartas:
             #carta = carta.json()
             nombre = carta["name"]
             message += "\n  "+nombre
-            key.append([KeyboardButton('/carta '+nombre)])
+            keyboard.append([KeyboardButton('/carta '+nombre)])
             
         key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
         bot.send_message(
