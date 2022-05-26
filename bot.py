@@ -172,8 +172,7 @@ def start(update:Update, context:CallbackContext):
         if type(carta) == str:
             update.message.reply_text(carta)
             return
-        #si no es un string, es una lista
-        carta = carta[0]
+        
         nombre = carta["name"]
 
         if len (opciones) == 0:
