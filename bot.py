@@ -22,7 +22,7 @@ EJEMPLOS:
 /carta Kuriboh /precios
 /carta Blue-Eyes White Dragon /arte /sets
 """
-
+modificadores = ["/descripcion","/imagen","/arte","/precios","/sets"]
 
 
 updater = Updater(tkn,use_context=True)
@@ -88,8 +88,20 @@ def start(update:Update, context:CallbackContext):
                 message += "\nLa carta se encuentra en los siguientes sets: "
                 for carta_set in carta['card_sets']:
                     message += "\n  " + carta_set['set_name']
-        context.bot.send_message(chat_id=chtiD, text=message)
-    
+        #context.bot.send_message(chat_id=chtiD, text=message)
+        # Creamos los botones especificos para la carta que está mostrando
+        keyboard = []
+        for modificador in modificadores:
+            keyboard = keyboard.append([KeyboardButton('/carta '+nombre+" "+modificador)])
+        key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
+        bot.send_message(
+            chat_id=chtiD,
+            text=message,
+            reply_to_message_id=update.effective_message.message_id,
+            reply_markup=key
+        )
+
+
     elif txt.startswith("/arquetipo"):
         opciones = txt.replace("/arquetipo ","")
         #parametros = opciones[0]
