@@ -59,7 +59,7 @@ def start(update:Update, context:CallbackContext):
     key = ReplyKeyboardMarkup(keyboard,resize_keyboard=True)
 
 
-    if txt=="/start":
+    if txt=="/start" or txt=="/ayuda":
         #context.bot.send_message(chat_id=chat_id, text=texto_start)
         bot.send_message(
             chat_id=chtiD,
